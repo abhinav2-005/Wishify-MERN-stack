@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Home from './components/Home'; 
+import AddWish from './components/Addwish'; // 🛑 IMPORT NEW COMPONENT
 
 const App = () => {
   return (
@@ -18,13 +20,17 @@ const App = () => {
             <Link to="/signup" style={styles.navLink}>
               Sign Up
             </Link>
+            <Link to="/dashboard" style={styles.navLink}>
+              Dashboard
+            </Link>
           </div>
         </nav>
         
         <div style={styles.content}>
           <Routes>
+            <Route path="/dashboard" element={<Home />} /> 
+            <Route path="/add-wish" element={<AddWish />} /> {/* 🛑 MAPPED NEW ROUTE */}
             <Route path="/login" element={<Login />} />
-            {/* 🛑 MODIFIED: The root path ("/") now renders the Signup component 🛑 */}
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Signup />} />
           </Routes>

@@ -1,14 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv'); 
+
+// Load environment variables (e.g., JWT_SECRET) from a .env file
+dotenv.config();
+
 const userRoutes = require('./routes/userRoutes');
+const wishRoutes = require('./routes/WishRoutes'); // 🛑 ADDED: Wish routes
 
 // 1. Configuration
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// 🛑 UPDATED MONGO_URI FOR LOCAL CONNECTION 🛑
-// Connecting to a local MongoDB instance running on the default port (27017)
+// 🛑 MONGO_URI FOR LOCAL CONNECTION 🛑
 const MONGO_URI = 'mongodb://127.0.0.1:27017/wishify_db'; 
 
 
@@ -28,6 +33,7 @@ mongoose.connect(MONGO_URI)
 
 // 4. Routes
 app.use('/api/users', userRoutes);
+app.use('/api/wishes', wishRoutes); // 🛑 ADDED: Add wish routes
 
 // Basic test route
 app.get('/', (req, res) => {
