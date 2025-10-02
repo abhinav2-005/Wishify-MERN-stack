@@ -36,7 +36,8 @@ const AddWish = () => {
             setTimeout(() => navigate('/login'), 1500);
             return;
         }
-
+         console.log("Attempting to POST to URL:", API_WISHES_URL);
+         console.log("Sending this data:", JSON.stringify(formData));
         try {
             const response = await fetch(API_WISHES_URL, {
                 method: 'POST',

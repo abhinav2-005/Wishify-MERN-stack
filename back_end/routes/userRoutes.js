@@ -83,5 +83,30 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Server error during login.', error: error.message });
     }
 });
+// ... in routes/userRoutes.js
 
+const auth = require('../middleware/Auth.js'); // 🛑 Make sure auth middleware is imported
+
+// ... after the '/login' route
+
+// =================================================================
+// ====> 🛑 NEW ROUTE TO GET CURRENT USER'S DATA 🛑 <====
+// =================================================================
+// GET /api/users/me - Get logged in user's data
+router.get('/me', auth, async (req, res) => {
+  try {
+    // req.user.id is attached by the 'auth' middleware
+    // Find the user but exclude the password field for security
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+module.exports = router;
 module.exports = router;
